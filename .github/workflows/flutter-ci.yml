@@ -1,0 +1,65 @@
+name: CAT.AI Flutter CI
+
+on:
+  push:
+    paths:
+      - "cat_os_flutter/**"
+      - ".github/workflows/flutter-ci.yml"
+  pull_request:
+    paths:
+      - "cat_os_flutter/**"
+      - ".github/workflows/flutter-ci.yml"
+  workflow_dispatch:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cat_os_flutter
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test
+
+  build-web:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cat_os_flutter
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - run: flutter pub get
+      - run: flutter build web --release --pwa-strategy=offline-first
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cat-os-web
+          path: cat_os_flutter/build/web
+
+  build-android-aab:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cat_os_flutter
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - run: flutter pub get
+      - run: flutter build appbundle --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cat-os-aab
+          path: cat_os_flutter/build/app/outputs/bundle/release/app-release.aab
