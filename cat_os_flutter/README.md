@@ -72,6 +72,14 @@ Before release, replace default launcher/PWA icons in:
 - `web/icons/*`
 - `web/favicon.png`
 
+You can regenerate all app icons from one SVG base:
+
+```bash
+cd design/icons/generate-icons
+npm install
+npm run generate
+```
+
 ## Stack
 
 - Flutter + Provider (state management)

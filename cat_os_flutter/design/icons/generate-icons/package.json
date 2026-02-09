@@ -1,0 +1,13 @@
+{
+  "name": "cat-ai-generate-icons",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Generate Android and PWA icons from icon-svg-base.svg",
+  "type": "module",
+  "scripts": {
+    "generate": "node generate-icons.mjs"
+  },
+  "dependencies": {
+    "sharp": "^0.34.4"
+  }
+}
