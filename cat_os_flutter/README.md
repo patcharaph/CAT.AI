@@ -2,12 +2,50 @@
 
 Minimalist digital desk companion with an animated robot cat face and persistent behavior memory.
 
+## Prerequisites
+
+- Flutter SDK (stable) installed
+- `flutter` command available in terminal `PATH`
+
 ## Local Run
 
 ```bash
 cd cat_os_flutter
 flutter pub get
 flutter run
+```
+
+Run on Chrome:
+
+```bash
+flutter run -d chrome
+```
+
+## Windows Fix (`flutter` not recognized)
+
+If PowerShell shows: `The term 'flutter' is not recognized...`
+
+```powershell
+New-Item -ItemType Directory -Force "$HOME\dev" | Out-Null
+git clone https://github.com/flutter/flutter.git -b stable "$HOME\dev\flutter"
+
+$flutterBin = "$HOME\dev\flutter\bin"
+$userPath = [Environment]::GetEnvironmentVariable("Path", "User")
+if ($userPath -notlike "*$flutterBin*") {
+  [Environment]::SetEnvironmentVariable("Path", "$userPath;$flutterBin", "User")
+}
+$env:Path = "$flutterBin;$env:Path"
+
+flutter --version
+flutter doctor
+```
+
+Then reopen terminal and run:
+
+```powershell
+cd d:\GitHub\CAT.AI\cat_os_flutter
+flutter pub get
+flutter run -d chrome
 ```
 
 ## PWA Ready (Mobile Web Install)
@@ -88,7 +126,8 @@ npm run generate
 
 ## Feature Mapping
 
-- Apple-minimal single-screen UI with squircle face surface
+- Single-screen minimalist UI with smooth round cat face and soft line-art
+- Right ear cyber accent with cyan glow
 - 6 emotion states with 300ms eased transitions
 - Idle blink every 5-10 seconds + gaze tracking from pointer/touch
 - Persistent Memory Model:

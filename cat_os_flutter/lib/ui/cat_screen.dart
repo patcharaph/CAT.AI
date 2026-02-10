@@ -8,18 +8,22 @@ import "widgets/micro_icon_overlay.dart";
 class CatScreen extends StatelessWidget {
   const CatScreen({super.key});
 
+  static const Color _pageBackgroundColor = Color(0xFFE5E5E8);
+  static const Color _catFillColor = Color(0xFFF7F7F8);
+  static const Color _catStrokeColor = Color(0xFF5C5F66);
+
   @override
   Widget build(BuildContext context) {
     return Consumer<CatController>(
       builder: (BuildContext context, CatController controller, _) {
         return Scaffold(
-          backgroundColor: controller.moodPreset.backgroundColor,
+          backgroundColor: _pageBackgroundColor,
           body: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
               final Size screenSize = constraints.biggest;
-              final double faceSize = (screenSize.shortestSide * 0.74).clamp(
-                220.0,
-                320.0,
+              final double faceSize = (screenSize.shortestSide * 0.72).clamp(
+                230.0,
+                390.0,
               );
 
               return Listener(
@@ -57,33 +61,13 @@ class CatScreen extends StatelessWidget {
                           blinkScale: controller.blinkScale,
                           gaze: controller.gaze,
                           size: faceSize,
-                          faceColor: controller.moodPreset.faceColor,
-                          featureColor: controller.moodPreset.featureColor,
-                        ),
-                      ),
-                      Positioned(
-                        left: 20,
-                        bottom: 20,
-                        child: Icon(
-                          Icons.tune_rounded,
-                          color: controller.moodPreset.featureColor
-                              .withValues(alpha: 0.22),
-                          size: 22,
-                        ),
-                      ),
-                      Positioned(
-                        right: 20,
-                        bottom: 20,
-                        child: Icon(
-                          Icons.settings_suggest_rounded,
-                          color: controller.moodPreset.featureColor
-                              .withValues(alpha: 0.22),
-                          size: 22,
+                          faceColor: _catFillColor,
+                          featureColor: _catStrokeColor,
                         ),
                       ),
                       MicroIconOverlay(
                         icon: controller.microIcon,
-                        color: controller.moodPreset.featureColor,
+                        color: _catStrokeColor,
                       ),
                     ],
                   ),
